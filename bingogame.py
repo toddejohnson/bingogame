@@ -96,7 +96,13 @@ class BingoPanel(wx.Panel):
     return name
 
   def onRestart(self, event):
-    self.restart()
+    msg = "Are you sure you want to restart?"
+    dlg = wx.MessageDialog(None, msg, "Restart?",
+                           wx.YES_NO | wx.ICON_WARNING)
+    result = dlg.ShowModal()
+    if result == wx.ID_YES:
+      wx.CallAfter(self.restart)
+      dlg.Destroy() 
  
   def onToggle(self, event):
     button = event.GetEventObject()

@@ -51,7 +51,7 @@ class BingoPanel(wx.Panel):
     self.nextWord.Bind(wx.EVT_BUTTON, self.onNextWordEv)
     btnSizer.Add(self.nextWord, 0, wx.ALL | wx.CENTER, 5)
 
-    startOverBtn = wx.Button(self, label="Restart")
+    startOverBtn = wx.Button(self, label="Start Over")
     startOverBtn.Bind(wx.EVT_BUTTON, self.onRestart)
     btnSizer.Add(startOverBtn, 0, wx.ALL|wx.CENTER, 5)
     mainSizer.Add(btnSizer, 0, wx.CENTER)
@@ -102,6 +102,7 @@ class BingoPanel(wx.Panel):
     button = event.GetEventObject()
     if button.GetLabel() != self.terms[self.termInd]:
       button.SetValue(False)
+      self.play(self.tts(self.terms[self.termInd]))
     else:
       button.Disable()
       if not self.checkWin():
@@ -132,7 +133,7 @@ class BingoPanel(wx.Panel):
         btn.SetBackgroundColour("Yellow")
       self.Layout()
       msg = "You Won! Would you like to play again?"
-      dlg = wx.MessageDialog(None, msg, "Winner!",
+      dlg = wx.MessageDialog(None, msg, "Bingo! Bingo!",
                               wx.YES_NO | wx.ICON_WARNING)
       result = dlg.ShowModal()
       if result == wx.ID_YES:

@@ -62,7 +62,16 @@ class BingoPanel(wx.Panel):
     self.play(self.tts(self.terms[self.termInd]))
 
   def onNextWordEv(self,event):
-    self.onNextWord()
+    if self.terms[self.termInd] in (btn.GetLabel() for slist in self.buttons for btn in slist):
+      msg = "Are you sure?"
+      dlg = wx.MessageDialog(None, msg, "Next?",
+                             wx.YES_NO | wx.ICON_WARNING)
+      result = dlg.ShowModal()
+      if result == wx.ID_YES:
+        wx.CallAfter(self.onNextWord)
+        dlg.Destroy()
+    else:
+      self.onNextWord()
 
   def onNextWord(self):
     self.termInd = self.termInd+1
